@@ -1,0 +1,1 @@
+python3 static_to_public.py
