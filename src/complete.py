@@ -10,11 +10,10 @@ def markdown_to_html(markdown):
         block_type = block_to_block_type(block)        
         if block_type.value == "paragraph":
             block = block.replace("\n", " ")
+            print(block)
             text_nodes = text_to_textnode(block)
             nodes = []
             for node in text_nodes:
-                print(node.text)
-                print("---")
                 nodes.append(text_node_to_html_node(node))
             htmlnodes.append(ParentNode("p", nodes))
 
@@ -79,16 +78,26 @@ def markdown_to_html(markdown):
                 split[i] = split[i][len(f"{i + 1}. "):]
             text_nodes = []
             for item in split:
-                text_nodes.append(text_to_textnode(item))
+                result = text_to_textnode(item)
+                print(type(result), result)
+                text_nodes.append(result)
             subs = []
             for node in text_nodes:
                 nodes = []
                 for line in node:
                     b = text_node_to_html_node(line)
                     nodes.append(b)
-            
                 subs.append(ParentNode("li", nodes))
             htmlnodes.append(ParentNode("ol", subs))
     
     x = ParentNode("html", htmlnodes)
     return x
+
+
+def main():
+    msg = """
+An elaborate pantheon of deities (the `Valar` and `Maiar`)
+"""
+    markdown_to_html(msg)
+
+main()

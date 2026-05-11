@@ -47,6 +47,8 @@ class LeafNode(HTMLNode):
                 return f"<li>{self.value}</li>"
             case "pre":
                 return f"<pre>{self.value}</pre>"
+            case "code":
+                return f"<code>{self.value}</code>"
             case _:
                 return f"{self.value}"
     def __repr__(self):
