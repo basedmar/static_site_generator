@@ -6,7 +6,6 @@ from textnode import *
 def markdown_to_html(markdown):
     blocks = markdown_to_blocks(markdown)
     htmlnodes = []
-
     for block in blocks:
         block_type = block_to_block_type(block)        
         if block_type.value == "paragraph":
@@ -14,6 +13,8 @@ def markdown_to_html(markdown):
             text_nodes = text_to_textnode(block)
             nodes = []
             for node in text_nodes:
+                print(node.text)
+                print("---")
                 nodes.append(text_node_to_html_node(node))
             htmlnodes.append(ParentNode("p", nodes))
 
@@ -24,7 +25,8 @@ def markdown_to_html(markdown):
                     count += 1
                 else:
                     break
-            block = block[count + 1:]
+            block = block[count:]
+            block = block.lstrip()
             block = block.replace("\n", " ")
             text_nodes = text_to_textnode(block)
             nodes = []
@@ -87,6 +89,6 @@ def markdown_to_html(markdown):
             
                 subs.append(ParentNode("li", nodes))
             htmlnodes.append(ParentNode("ol", subs))
-        
-    x = ParentNode("div", htmlnodes)
+    
+    x = ParentNode("html", htmlnodes)
     return x

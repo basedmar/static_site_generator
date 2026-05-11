@@ -17,17 +17,21 @@ def split_nodes_images(old_nodes):
             new_nodes.append(node)
             continue
         for pic in regex:
+            
             string = plain.split(f"![{pic[0]}]({pic[1]})", maxsplit=1)
             if len(string) != 2:
                 raise Exception("not proper markdown")
             if string[0] != "":
                 new_nodes.append(Textnode(string[0], TextType.TEXT))
+            
             new_nodes.append(Textnode(pic[0], TextType.IMAGE, pic[1]))
+            print(new_nodes)
             plain = string[1]
         if plain != "":
              new_nodes.append(Textnode(plain, TextType.TEXT))
+    
     return new_nodes
-
+    
 
 def split_nodes_links(old_nodes):
     new_nodes = []

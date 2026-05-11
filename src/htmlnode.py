@@ -31,6 +31,8 @@ class LeafNode(HTMLNode):
         if not self.tag:
             return self.value
         match self.tag:
+            case "img":
+                return f'<img{self.props_to_htlm()}>{self.value}</img>'
             case "p":
                 return f"<p>{self.value}</p>"
             case "a":
@@ -56,6 +58,7 @@ class ParentNode(HTMLNode):
         super().__init__(tag, None, children, props)
 
     def to_html(self):
+        
         if not self.tag:
             raise ValueError
         if not self.children:
