@@ -1,6 +1,8 @@
 import os
 import shutil
 from complete import *
+
+
 def copyy(dir_copy, dir_remove_replace):
     if not os.path.exists(dir_remove_replace):
         os.mkdir(dir_remove_replace)
@@ -21,7 +23,7 @@ def extract_title(markdown):
     else:
         raise Exception("no h1 header")
 
-def generate_page(from_path, temp_path, dest):
+def generate_page(from_path, temp_path, dest, basepath):
     print(f"making page from {from_path} to {dest} using {temp_path}")
     markdown = None
     with open(from_path, mode="r") as f:
@@ -33,6 +35,8 @@ def generate_page(from_path, temp_path, dest):
     title = extract_title(markdown)
     template = template.replace("{{ Title }}", title)
     template = template.replace("{{ Content }}", html)
+    template = template.replace('href="/', f'href="{basepath}')
+    template = template.replace('src="/', f'src="{basepath}')
     dest_path = os.path.dirname(dest)
     os.makedirs(dest_path, exist_ok=True)
     with open(dest, mode="w") as f:
